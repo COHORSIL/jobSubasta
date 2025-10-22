@@ -25,7 +25,7 @@ export async function initializeDB() {
     
     const pagosModel = await import('../models/pagos.js');
     const SubastaModel = await import('../models/subasta.js');
-    const PaymentSessionModel = await import('../models/paymentSession.js');
+    const PaymentSessionModel = await import('../models/PaymentSession.js');
 
 
     const pago = pagosModel.default(sequelize, Sequelize.DataTypes);
