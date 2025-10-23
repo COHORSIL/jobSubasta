@@ -56,6 +56,22 @@ export default class PagoService {
         where: { id_pago: session.reference },
       });
       if (pago) {
+        const response = await axios.get('https://201.190.6.19/rest/formatosar.php');
+        const data = response.data; // ejemplo: ["008-001-01-00008024", "29A19B...", "008-001-01-00007801", "008-001-01-00008800", "2025-12-19 00:00:00.000"]
+        console.log(data);
+        // ✅ Almacenar los valores en variables
+        const factura      = data.NumeroFactura;
+        const cai          = data.CAI;
+        const rangoDe      = data.Correlativo_Minimo;
+        const rangoHasta   = data.Correlativo_Maximo;
+        const fechaLimite  = data.Fecha_Vencimiento;
+
+        // ✅ Guardar esos valores en el pago
+        pago.factura = factura;
+        pago.cai = cai;
+        pago.rangode = rangoDe;
+        pago.rangohasta = rangoHasta;
+        pago.fechaLimite = fechaLimite;
         pago.estado_pago = 'aprobado';
         await pago.save();
       }
